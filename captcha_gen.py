@@ -1,49 +1,52 @@
 from PIL import Image, ImageDraw, ImageFont
 import random
 import string
+for j in range(1000):
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
 
-r = random.randint(0, 255)
-g = random.randint(0, 255)
-b = random.randint(0, 255)
-
-# Use the random values to create a color in the RGB format
-rand_background = (r, g, b)
-
-
-colors = [
-    (255, 127, 0),  # orange
-    (0, 255, 0),  # green
-    (0, 0, 255),  # blue
-    (75, 0, 130),  # indigo
-]
+    # Use the random values to create a color in the RGB format
+    rand_background = (r, g, b)
 
 
-def generate_random_string(length):
-    letters_and_digits = string.ascii_letters + string.digits
-    return ''.join(random.choice(letters_and_digits) for i in range(length))
+    colors = [
+        (255, 127, 0),  # orange
+        (0, 255, 0),  # green
+        (0, 0, 255),  # blue
+        (75, 0, 130),  # indigo
+    ]
 
 
-random_string = generate_random_string(8)
-image = Image.new('RGB', (200, 50), rand_background)
-draw = ImageDraw.Draw(image)
+    def generate_random_string(length):
+        letters_and_digits = string.ascii_letters + string.digits
+        return ''.join(random.choice(letters_and_digits) for i in range(length))
 
-# Noise, points
-for i in range(500):
-    draw.point((random.randint(0, 400), random.randint(0, 50)), fill=(0, 0, 0))
+    
 
-font = ImageFont.truetype('arial.ttf', 36)
-text_width, text_height = draw.textsize(random_string, font=font)
 
-chars = list(random_string)
-x, y = 0, 0
 
-# Iterate over each character in the text
-for i, c in enumerate(chars):
-    text_color = colors[i % len(colors)]
+    random_string = generate_random_string(8)
+    image = Image.new('RGB', (225, 50), rand_background)
+    draw = ImageDraw.Draw(image)
 
-    draw.text((x + (i * 3), y), c, fill=text_color, font=font)
+    # Noise, points
+    for i in range(500):
+        draw.point((random.randint(0, 400), random.randint(0, 50)), fill=(0, 0, 0))
 
-    x += draw.textsize(c, font=font)[0]
+    font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 36)
+    text_width, text_height = draw.textsize(random_string, font=font)
 
-image.save('captcha.png')
-print(random_string)
+    chars = list(random_string)
+    x, y = 0, 0
+    text_color = colors[j % len(colors)]
+    # Iterate over each character in the text
+    for i, c in enumerate(chars):
+        
+
+        draw.text((x + (i * 3), y), c, fill=text_color, font=font)
+
+        x += draw.textsize(c, font=font)[0]
+
+    image.save("captchas/" + random_string + '.png')
+    print(random_string)
