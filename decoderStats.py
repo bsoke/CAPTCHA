@@ -4,9 +4,9 @@ import cv2 as cv
 from matplotlib import pyplot as plt
 import os
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Users\baris\anaconda3\Lib\site-packages\tesseract.exe'
+#pytesseract.pytesseract.tesseract_cmd = r'C:\Users\baris\anaconda3\Lib\site-packages\tesseract.exe'
 
-dir_path = r'C:\Users\baris\Desktop\KU\COMP430\CAPTCHA\pngs'
+dir_path = r'pngs'
 
 res = []
 normal_accuracy = []
