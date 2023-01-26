@@ -15,3 +15,4 @@ Anaconda Installation reference: https://www.anaconda.com/products/distribution
 	-Check the box "Use the following Python interpreter"  
 	-Select the enviroment you just created from the dropdown menu.  
 
+Additionally it might be necessary to download this font: https://sourceforge.net/projects/dejavu/files/latest/download in order to create new directional CAPTCHAs
