@@ -93,9 +93,15 @@ for i in res:
    ##To visualize
     # plt.imshow(th4,'gray')
     # plt.show()
+normalAccuracy = normalAmtCorrect / len(res)
+gaussianAccuracy = gaussianThrsAmtCorrect / len(res)
 
 print("The normal method got ", normalAmtCorrect, "correct out of ", len(res))
+print("The normal method has an accuracy of", normalAccuracy)
+print("---------------------------")
 print("The gausian threshold got ", gaussianThrsAmtCorrect,"correct out of ", len(res) )
+print("The gausian threshold has an accuracy of", gaussianAccuracy)
+
 
 
 

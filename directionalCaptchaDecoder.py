@@ -75,7 +75,7 @@ def determineDirection(arrow_tip,arrow_bottom):
     
 
 
-fileString = "6912988.png"
+fileString = "directionalCAPTCHALessNoise/2009493.png"
 img = cv2.imread(fileString)
 img2 = Image.open("matrix.png")
 
@@ -112,9 +112,9 @@ for cnt in contours:
             print(direction)
 
 sortedDirectionArray = sorted(directionArray, key=lambda d: d['x-tip']) 
-
+print(sortedDirectionArray)
 #extract table data
-et_sess = ExtractTable(api_key="0r7fk6k4WWMeYf85XALxRIkhI8DZyX6T2Mli5SNc")        # Replace your VALID API Key here
+et_sess = ExtractTable(api_key="DQXaKPkMGfBqQ5J3LNkcToUXrMXT0CiZwzgX8CXr")        # Replace your VALID API Key here
 print(et_sess.check_usage())        # Checks the API Key validity as well as shows associated plan usage 
 table_data = et_sess.process_file(filepath=fileString, output_format="df")
 
@@ -149,5 +149,5 @@ print(solutionString)
 
 
 
-#cv2.imshow("Image", img)
-#cv2.waitKey(0)
+cv2.imshow("Image", img)
+cv2.waitKey(0)
