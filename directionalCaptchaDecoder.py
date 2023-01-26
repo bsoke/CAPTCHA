@@ -3,7 +3,11 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
+from ExtractTable import ExtractTable
+import pandas as pd
 
+
+pytesseract.pytesseract.tesseract_cmd = r'/usr/local/Cellar/tesseract/5.3.0_1/bin/tesseract'
 #this arrow finding is taken from https://stackoverflow.com/questions/66718462/how-to-detect-different-types-of-arrows-in-image
 #Had to change the epsilon though, as the arrows used aren't as "arrowy" as the ones in the post
 def preprocess(img):
@@ -71,8 +75,8 @@ def determineDirection(arrow_tip,arrow_bottom):
     
 
 
-
-img = cv2.imread("matrix.png")
+fileString = "6912988.png"
+img = cv2.imread(fileString)
 img2 = Image.open("matrix.png")
 
 contours, hierarchy = cv2.findContours(preprocess(img), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -94,7 +98,7 @@ for cnt in contours:
         print(arrow_tip)
         print(arrow_bottom)
         colors = [(0,0,0),(255,0,0),(255,255,0),(0,0,255),(0,255,255),(255,0,255),(255,255,0),(0,0,255)]
-        if arrow_tip:
+        if arrow_tip and arrow_bottom:
             cv2.drawContours(img, [cnt], -1, (0, 255, 0), 3)
             cv2.circle(img, arrow_tip, 3, colors[count], cv2.FILLED)
             cv2.circle(img, arrow_bottom, 3, (0, 0, 255), cv2.FILLED)
@@ -109,7 +113,41 @@ for cnt in contours:
 
 sortedDirectionArray = sorted(directionArray, key=lambda d: d['x-tip']) 
 
-print(sortedDirectionArray)
+#extract table data
+et_sess = ExtractTable(api_key="0r7fk6k4WWMeYf85XALxRIkhI8DZyX6T2Mli5SNc")        # Replace your VALID API Key here
+print(et_sess.check_usage())        # Checks the API Key validity as well as shows associated plan usage 
+table_data = et_sess.process_file(filepath=fileString, output_format="df")
 
-cv2.imshow("Image", img)
-cv2.waitKey(0)
+print(table_data[0].at[0,'0'])
+
+
+
+
+
+solutionString = ""
+for i in sortedDirectionArray:
+    if i["direction"] == "northWest":
+        solutionString += table_data[0].at[0,'0']
+    elif i["direction"] == "northEast":
+        solutionString += table_data[0].at[0,'2']
+    elif i["direction"] == "southWest":
+        solutionString += table_data[0].at[2,'0']
+    elif i["direction"] == "southEast":
+        solutionString += table_data[0].at[2,'2']
+    elif i["direction"] == "up":
+        solutionString += table_data[0].at[0,'1']
+    elif i["direction"] == "down":
+        solutionString += table_data[0].at[2,'1']
+    elif i["direction"] == "left":
+        solutionString += table_data[0].at[1,'0']
+    elif i["direction"] == "right":
+        solutionString += table_data[0].at[1,'2']
+
+
+print(solutionString)
+    
+
+
+
+#cv2.imshow("Image", img)
+#cv2.waitKey(0)

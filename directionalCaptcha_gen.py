@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
 import random
+import dataframe_image as dfi
 
 
 fig, ax = plt.subplots()
@@ -18,16 +19,17 @@ matrix = np.array([[random.randint(0, 9),random.randint(0, 9),random.randint(0, 
                     [random.randint(0, 9),random.randint(0, 9),random.randint(0, 9)]])
 
 df = pd.DataFrame(matrix)
-print(matrix[1])
+print(df)
 
 ax.table(cellText=df.values, loc='center')
 
 fig.tight_layout()
 
+#dfi.export(matrix,"matrix.png")
 plt.savefig('matrix.png', bbox_inches='tight')
 
 
-image = Image.new('RGB', (250, 50), background)
+image = Image.new('RGB', (500, 100), background)
 
 draw = ImageDraw.Draw(image)
 
@@ -46,7 +48,7 @@ arrowArray = generate_random_arrowString(7)
 arrowString = ''.join(arrowArray)
 
 
-font = ImageFont.truetype('/Users/vincentpedersen/Desktop/dejavu-fonts-ttf-2.37/ttf/DejaVuSans.ttf', 36)
+font = ImageFont.truetype('/Users/vincentpedersen/Desktop/dejavu-fonts-ttf-2.37/ttf/DejaVuSans.ttf', 72)
 text_width, text_height = draw.textsize(arrowString, font=font)
 chars = list(arrowString)
 x, y = 0, 0
